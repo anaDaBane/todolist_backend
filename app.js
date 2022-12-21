@@ -31,9 +31,7 @@ app.use(xss())
 app.use(express.json())
 
 // routes
-app.get('/', (req, res) => {
-  res.send('Phyo Wai Lin To Do List App')
-})
+app.use(express.static('./public'))
 app.use('/api/v1/auth', userRouter)
 app.use('/api/v1/list', authMiddleware, listRouter)
 
