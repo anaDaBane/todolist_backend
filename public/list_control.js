@@ -32,6 +32,8 @@ const fetchData = async () => {
     if (count === 0) {
       const data = `No item exists`
       contentDom.innerHTML = `<div class='row justify-content-center'><span class='text-center'>${data}</span></div>`
+      contentDom.style.visibility = 'visible'
+  loadingDom.style.visibility = 'hidden'
       return
     }
     const data = lists
@@ -116,7 +118,7 @@ formDom.addEventListener('submit', async (e) => {
       contextDom.value = ''
       stateDom.value = ''
       isCompleteDom.checked = false
-      await fetchData()
+      fetchData()
       setTimeout(() => {
         noteDom.innerHTML = ''
       }, 2000)
