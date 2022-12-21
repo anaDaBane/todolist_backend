@@ -116,7 +116,7 @@ formDom.addEventListener('submit', async (e) => {
       contextDom.value = ''
       stateDom.value = ''
       isCompleteDom.checked = false
-      fetchData()
+      await fetchData()
       setTimeout(() => {
         noteDom.innerHTML = ''
       }, 2000)
