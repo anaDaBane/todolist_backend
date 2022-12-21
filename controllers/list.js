@@ -8,7 +8,7 @@ const {
 
 const getAllList = async (req, res) => {
   const {
-    user: { userId },
+    user: { userId, userName },
     query: { title, context, state, isComplete, sort, fields },
   } = req
   let queryObj = {}
@@ -48,32 +48,32 @@ const getAllList = async (req, res) => {
   const skip = (page - 1) * limit
   result = result.skip(skip).limit(limit)
   const lists = await result
-  res.status(StatusCodes.OK).json({ count: lists.length, lists })
+  res.status(StatusCodes.OK).json({ count: lists.length, lists, user: {userName} })
 }
 
 const createList = async (req, res) => {
   const {
-    user: { userId },
+    user: { userId, userName },
   } = req
   const list = await List.create({ createdBy: userId, ...req.body })
-  res.status(StatusCodes.CREATED).json({ list })
+  res.status(StatusCodes.CREATED).json({ list, user: {userName} })
 }
 
 const getList = async (req, res) => {
   const {
-    user: { userId },
+    user: { userId, userName },
     params: { id: listId },
   } = req
   const list = await List.findById({ createdBy: userId, _id: listId })
   if (!list) {
     throw new BadRequestError(`There is no list for id ${listId}`)
   }
-  res.status(StatusCodes.OK).json({ list })
+  res.status(StatusCodes.OK).json({ list, user: {userName} })
 }
 
 const updateList = async (req, res) => {
   const {
-    user: { userId },
+    user: { userId, userName },
     params: { id: listId },
     body: { title, context, isComplete, state },
   } = req
@@ -88,7 +88,7 @@ const updateList = async (req, res) => {
   if (!list) {
     throw new BadRequestError(`There is no list for id ${listId}`)
   }
-  res.status(StatusCodes.OK).json({ list })
+  res.status(StatusCodes.OK).json({ list, user: {userName} })
 }
 
 const deleteList = async (req, res) => {
